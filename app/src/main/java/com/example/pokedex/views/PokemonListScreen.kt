@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.pokedex.R
 import com.example.pokedex.model.PokedexListEntry
 import com.example.pokedex.ui.theme.RobotoCondensed
@@ -185,12 +187,18 @@ fun PokedexEntry(
             }
     ) {
         Column {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 model = entry.imageUrl,
                 onSuccess = {
                     viewModel.calcDominantColor(it.result.drawable) { color ->
                         dominantColor = color
                     }
+                },
+                loading = {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier.scale(0.5f)
+                    )
                 },
                 contentDescription = entry.pokemonName,
                 modifier = Modifier

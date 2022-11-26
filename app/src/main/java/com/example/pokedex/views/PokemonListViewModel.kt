@@ -31,7 +31,7 @@ class PokemonListViewModel @Inject constructor(
     var endReached = mutableStateOf(false)
 
     private var cachedPokemonList = listOf<PokedexListEntry>()
-    private var isSearchStarting = true
+    var isSearchStarting = true
     var isSearching = mutableStateOf(false)
 
     init {
