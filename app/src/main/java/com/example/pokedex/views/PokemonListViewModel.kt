@@ -50,17 +50,19 @@ class PokemonListViewModel @Inject constructor(
                 isSearching.value = false
                 isSearchStarting = true
                 return@launch
+            }else{
+
+                val results = listToSearch.filter {
+                    it.pokemonName.contains(query.trim(), ignoreCase = true) ||
+                            it.number.toString() == query.trim()
+                }
+                if (isSearchStarting) {
+                    cachedPokemonList = pokemonList.value
+                    isSearchStarting = false
+                }
+                pokemonList.value = results
+                isSearching.value = true
             }
-            val results = listToSearch.filter {
-                it.pokemonName.contains(query.trim(), ignoreCase = true) ||
-                        it.number.toString() == query.trim()
-            }
-            if(isSearchStarting) {
-                cachedPokemonList = pokemonList.value
-                isSearchStarting = false
-            }
-            pokemonList.value = results
-            isSearching.value = true
         }
     }
 
